@@ -1,8 +1,12 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("plugin.serialization")
 }
 
+val localProperties = gradleLocalProperties(rootDir)
 android {
     namespace = "ru.mishenko.maksim.schedule"
     compileSdk = 33
@@ -28,6 +32,12 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            debug {
+                buildConfigField("String", "leaderIdUrl", localProperties.getProperty("leaderIdUrl"))
+                buildConfigField("String", "leaderApiKey", localProperties.getProperty("leaderApiKey"))
+                buildConfigField("String", "leaderIdSecret", localProperties.getProperty("leaderIdSecret"))
+                buildConfigField("String", "omgtuScheduleUrl", localProperties.getProperty("omgtuScheduleUrl"))
+            }
         }
     }
     compileOptions {
@@ -39,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -71,6 +82,9 @@ dependencies {
     // ktor
     implementation("io.ktor:ktor-client-core:2.3.4")
     implementation("io.ktor:ktor-client-cio:2.3.4")
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.4") //serialization
+    implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
+    implementation("io.ktor:ktor-client-logging:2.3.4") //logger
 
     // OAuth
     implementation("net.openid:appauth:0.9.1")
