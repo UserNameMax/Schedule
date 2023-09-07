@@ -9,7 +9,7 @@ plugins {
 val localProperties = gradleLocalProperties(rootDir)
 android {
     namespace = "ru.mishenko.maksim.schedule"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "ru.mishenko.maksim.schedule"
@@ -88,4 +88,7 @@ dependencies {
 
     // OAuth
     implementation("net.openid:appauth:0.9.1")
+
+    // WebView
+    implementation("com.google.accompanist:accompanist-webview:0.33.1-alpha")
 }
