@@ -6,17 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import ru.mishenko.maksim.schedule.model.Event
-import ru.mishenko.maksim.schedule.repository.omgtu.OmgtuRepositoryImpl
+import ru.mishenko.maksim.schedule.domain.ScheduleUseCase
+import ru.mishenko.maksim.schedule.domain.model.Event
 import ru.mishenko.maksim.schedule.ui.schedule.EventList
 import ru.mishenko.maksim.schedule.ui.theme.ScheduleTheme
 
@@ -26,7 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             var events by remember { mutableStateOf(listOf<Event>()) }
             LaunchedEffect(Unit) {
-                events = OmgtuRepositoryImpl().events("ИВТ-213")
+                events = ScheduleUseCase().invoke()
             }
             ScheduleTheme {
                 // A surface container using the 'background' color from the theme
@@ -38,21 +35,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ScheduleTheme {
-        Greeting("Android")
     }
 }

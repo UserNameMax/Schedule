@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.mishenko.maksim.schedule.model.Event
+import ru.mishenko.maksim.schedule.domain.model.Event
 import java.text.SimpleDateFormat
 
 @Composable
