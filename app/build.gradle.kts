@@ -88,4 +88,8 @@ dependencies {
 
     // OAuth
     implementation("net.openid:appauth:0.9.1")
+
+    // koin
+    implementation("io.insert-koin:koin-core:3.4.3")
+    implementation("io.insert-koin:koin-android:3.4.3")
 }
