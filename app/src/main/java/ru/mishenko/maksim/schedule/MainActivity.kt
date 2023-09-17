@@ -25,8 +25,7 @@ import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.util.InternalAPI
-import ru.mishenko.maksim.schedule.model.Event
-import ru.mishenko.maksim.schedule.repository.omgtu.OmgtuRepositoryImpl
+import ru.mishenko.maksim.schedule.data.repository.omgtu.OmgtuRepositoryImpl
 import ru.mishenko.maksim.schedule.domain.ScheduleUseCase
 import ru.mishenko.maksim.schedule.domain.model.Event
 import ru.mishenko.maksim.schedule.ui.schedule.EventList
@@ -46,6 +45,7 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(code) {
                 val client = HttpClient(CIO)
                 if (code != "") {
+                    Log.i("WebView", "code = $code")
                     val response = client.post("https://apps.leader-id.ru/api/v1/oauth/token") {
                         val body = "{\n" +
                                 "    \"client_id\": \"${BuildConfig.leaderApiKey}\",\n" +
@@ -68,12 +68,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    EventList(events = events)
-                }
-            }
-        }
-    }
-}
                     if (code != "")
                         EventList(events = events)
                     else Auth {
@@ -87,14 +81,16 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Auth(callback: (String) -> Unit) {
+    //https://leader-id.ru/apps/authorize?client_id=28854ddd-3f47-4c3b-9bbc-be070c000ccd&redirect_uri=https://localhost&response_type=code
+    val redirectUri = "https://localhost"
     val state =
-        rememberWebViewState(url = "https://leader-id.ru/apps/authorize?client_id=${BuildConfig.leaderApiKey}&redirect_uri=REDIRECT_URI&response_type=code")
+        rememberWebViewState(url = "https://leader-id.ru/apps/authorize?client_id=${BuildConfig.leaderApiKey}&redirect_uri=${redirectUri}&response_type=code")
     val client = remember {
         object : AccompanistWebViewClient() {
             override fun onPageFinished(view: WebView, url: String?) {
                 super.onPageFinished(view, url)
                 Log.i("WebView", "$url")
-                if (url?.contains("https://redirect_uri") == true) {
+                if (url?.startsWith(redirectUri) == true) {
                     callback(url.substringAfter("="))
                 }
             }
