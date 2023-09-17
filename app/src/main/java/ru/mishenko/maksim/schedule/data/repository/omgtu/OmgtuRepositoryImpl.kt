@@ -1,15 +1,15 @@
-package ru.mishenko.maksim.schedule.repository.omgtu
+package ru.mishenko.maksim.schedule.data.repository.omgtu
 
-import ru.mishenko.maksim.schedule.api.omgtu.OmgtuScheduleApi
-import ru.mishenko.maksim.schedule.api.omgtu.OmgtuScheduleApiImpl
-import ru.mishenko.maksim.schedule.api.omgtu.model.ScheduleResponse
-import ru.mishenko.maksim.schedule.model.Event
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import ru.mishenko.maksim.schedule.data.api.omgtu.OmgtuScheduleApi
+import ru.mishenko.maksim.schedule.data.api.omgtu.model.ScheduleResponse
+import ru.mishenko.maksim.schedule.domain.model.Event
 import java.text.SimpleDateFormat
 import java.util.GregorianCalendar
 
-class OmgtuRepositoryImpl(
-    private val api: OmgtuScheduleApi = OmgtuScheduleApiImpl()
-) : OmgtuRepository {
+class OmgtuRepositoryImpl() : OmgtuRepository, KoinComponent {
+    private val api: OmgtuScheduleApi by inject()
     override suspend fun events(group: String): List<Event> =
         with(api.search(group, "group").firstOrNull()) {
             if (this == null) listOf()

@@ -9,7 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ru.mishenko.maksim.schedule.model.Event
+import ru.mishenko.maksim.schedule.domain.model.Event
 
 @Composable
 fun EventList(events: List<Event>) {

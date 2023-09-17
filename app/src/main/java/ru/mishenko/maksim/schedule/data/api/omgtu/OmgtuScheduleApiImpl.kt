@@ -1,4 +1,4 @@
-package ru.mishenko.maksim.schedule.api.omgtu
+package ru.mishenko.maksim.schedule.data.api.omgtu
 
 import android.util.Log
 import io.ktor.client.HttpClient
@@ -13,8 +13,8 @@ import io.ktor.client.request.parameter
 import io.ktor.http.appendPathSegments
 import io.ktor.serialization.kotlinx.json.json
 import ru.mishenko.maksim.schedule.BuildConfig
-import ru.mishenko.maksim.schedule.api.omgtu.model.ScheduleResponse
-import ru.mishenko.maksim.schedule.api.omgtu.model.SearchResponse
+import ru.mishenko.maksim.schedule.data.api.omgtu.model.ScheduleResponse
+import ru.mishenko.maksim.schedule.data.api.omgtu.model.SearchResponse
 
 class OmgtuScheduleApiImpl : OmgtuScheduleApi {
     private val baseUrl = BuildConfig.omgtuScheduleUrl

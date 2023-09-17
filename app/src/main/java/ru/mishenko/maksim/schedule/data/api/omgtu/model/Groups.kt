@@ -1,4 +1,4 @@
-package ru.mishenko.maksim.schedule.api.omgtu.model
+package ru.mishenko.maksim.schedule.data.api.omgtu.model
 
 import kotlinx.serialization.Serializable
 

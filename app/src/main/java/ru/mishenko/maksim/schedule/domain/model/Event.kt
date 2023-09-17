@@ -1,4 +1,4 @@
-package ru.mishenko.maksim.schedule.model
+package ru.mishenko.maksim.schedule.domain.model
 
 import java.util.Calendar
 

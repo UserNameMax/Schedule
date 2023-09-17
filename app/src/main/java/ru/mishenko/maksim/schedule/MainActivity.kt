@@ -27,6 +27,8 @@ import io.ktor.http.contentType
 import io.ktor.util.InternalAPI
 import ru.mishenko.maksim.schedule.model.Event
 import ru.mishenko.maksim.schedule.repository.omgtu.OmgtuRepositoryImpl
+import ru.mishenko.maksim.schedule.domain.ScheduleUseCase
+import ru.mishenko.maksim.schedule.domain.model.Event
 import ru.mishenko.maksim.schedule.ui.schedule.EventList
 import ru.mishenko.maksim.schedule.ui.theme.ScheduleTheme
 
@@ -38,6 +40,7 @@ class MainActivity : ComponentActivity() {
             var events by remember { mutableStateOf(listOf<Event>()) }
             var code by remember { mutableStateOf("") }
             LaunchedEffect(Unit) {
+                events = ScheduleUseCase().invoke()
                 events = OmgtuRepositoryImpl().events("ИВТ-213")
             }
             LaunchedEffect(code) {
@@ -65,6 +68,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    EventList(events = events)
+                }
+            }
+        }
+    }
+}
                     if (code != "")
                         EventList(events = events)
                     else Auth {

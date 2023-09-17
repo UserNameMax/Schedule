@@ -9,7 +9,7 @@ plugins {
 val localProperties = gradleLocalProperties(rootDir)
 android {
     namespace = "ru.mishenko.maksim.schedule"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "ru.mishenko.maksim.schedule"
@@ -91,4 +91,8 @@ dependencies {
 
     // WebView
     implementation("com.google.accompanist:accompanist-webview:0.33.1-alpha")
+
+    // koin
+    implementation("io.insert-koin:koin-core:3.4.3")
+    implementation("io.insert-koin:koin-android:3.4.3")
 }
