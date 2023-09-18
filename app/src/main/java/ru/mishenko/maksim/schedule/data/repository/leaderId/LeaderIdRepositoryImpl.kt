@@ -25,7 +25,7 @@ class LeaderIdRepositoryImpl : LeaderIdRepository, KoinComponent {
     )
 
     private fun getCalendar(date: String): Calendar =
-        with(SimpleDateFormat("YYYY-MM-DD HH:mm:SS")) {
+        with(SimpleDateFormat("yyyy-MM-dd HH:mm:SS")) {
             val time = this.parse(date)
             GregorianCalendar().apply { if (time != null) this.time = time }
         }

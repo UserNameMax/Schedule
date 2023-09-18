@@ -16,6 +16,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import ru.mishenko.maksim.schedule.data.api.leaderId.model.LeaderIdAuthRequest
 import ru.mishenko.maksim.schedule.data.api.leaderId.model.LeaderIdAuthResponse
 import ru.mishenko.maksim.schedule.data.api.leaderId.model.LeaderIdUrls
@@ -24,7 +25,9 @@ import ru.mishenko.maksim.schedule.data.api.leaderId.model.event.UserEventsRespo
 class LeaderIdApiImpl : LeaderIdApi {
     private val client = HttpClient(CIO) {
         install(ContentNegotiation) {
-            json()
+            json(Json {
+                ignoreUnknownKeys = true
+            })
         }
         install(Logging) {
             logger = object : Logger {

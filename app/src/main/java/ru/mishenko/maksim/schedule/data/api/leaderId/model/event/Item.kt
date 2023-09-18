@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Item(
     val completed: Boolean,
-    val completedAt: String,
+    val completedAt: String?,
     val createdAt: String,
     val event: Event,
     val id: String,

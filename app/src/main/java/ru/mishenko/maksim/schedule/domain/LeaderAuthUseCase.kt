@@ -13,8 +13,8 @@ class LeaderAuthUseCase : KoinComponent {
         Log.e("token", access_token)
         addSettingsUseCase.addSettings(
             schedule, Settings.LeaderIdSettings(
-                refreshToken = access_token,
-                accessToken = refresh_token,
+                refreshToken = refresh_token,
+                accessToken = access_token,
                 userId = user_id.toString()
             )
         )
