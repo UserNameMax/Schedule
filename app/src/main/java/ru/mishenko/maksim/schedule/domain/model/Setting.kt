@@ -6,4 +6,10 @@ sealed interface Settings {
             Auditorium, Group, Person
         }
     }
+
+    data class LeaderIdSettings(
+        val userId: String,
+        val refreshToken: String,
+        val accessToken: String
+    ) : Settings
 }

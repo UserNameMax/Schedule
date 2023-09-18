@@ -1,5 +1,6 @@
-package ru.mishenko.maksim.schedule.domain
+package ru.mishenko.maksim.schedule.domain.impl
 
+import ru.mishenko.maksim.schedule.domain.GetSettingsUseCase
 import ru.mishenko.maksim.schedule.domain.model.Settings
 
 class GetSettingsUseCaseMock : GetSettingsUseCase {

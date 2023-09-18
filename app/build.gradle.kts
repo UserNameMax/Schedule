@@ -86,9 +86,6 @@ dependencies {
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
     implementation("io.ktor:ktor-client-logging:2.3.4") //logger
 
-    // OAuth
-    implementation("net.openid:appauth:0.9.1")
-
     // WebView
     implementation("com.google.accompanist:accompanist-webview:0.33.1-alpha")
 
