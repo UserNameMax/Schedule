@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.serialization")
+    id("kotlin-parcelize")
 }
 
 val localProperties = gradleLocalProperties(rootDir)
@@ -92,4 +93,10 @@ dependencies {
     // koin
     implementation("io.insert-koin:koin-core:3.4.3")
     implementation("io.insert-koin:koin-android:3.4.3")
+
+    //decompose
+    implementation("com.arkivanov.decompose:decompose:2.0.2")
+    implementation("com.arkivanov.decompose:extensions-compose-jetpack:2.0.2")
+    implementation("com.arkivanov.decompose:extensions-android:2.0.2")
+
 }
