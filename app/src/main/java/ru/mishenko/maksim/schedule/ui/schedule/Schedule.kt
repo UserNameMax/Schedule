@@ -33,10 +33,10 @@ class Schedule(componentContext: ComponentContext, val auth: (() -> Unit) -> Uni
     @Composable
     override fun draw() {
         val state by mutableState.collectAsState()
-        if (!isAuth) {
-            auth(::update)
-            isAuth = true
-        }
+//        if (!isAuth) {
+//            auth(::update)
+//            isAuth = true
+//        }
         ScheduleScreen(events = state)
     }
 }

@@ -1,17 +1,17 @@
 package ru.mishenko.maksim.schedule.ui.root
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.extensions.compose.jetpack.stack.Children
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.essenty.parcelable.Parcelable
 import kotlinx.parcelize.Parcelize
 import ru.mishenko.maksim.schedule.ui.leaderAuth.LeaderAuth
 import ru.mishenko.maksim.schedule.ui.schedule.Schedule
+import ru.mishenko.maksim.schedule.ui.settings.Settings
 
 interface Component {
     @Composable
@@ -30,7 +30,7 @@ class Root(componentContext: ComponentContext) : Component, ComponentContext by 
         when (config) {
             Config.Schedule -> Schedule(
                 componentContext = componentContext,
-                auth = { navigate(Config.LeaderAuth(it)) })
+                auth = { pushNavigate(Config.LeaderAuth(it)) })
 
             is Config.LeaderAuth -> LeaderAuth(
                 componentContext = componentContext,
@@ -38,30 +38,41 @@ class Root(componentContext: ComponentContext) : Component, ComponentContext by 
                     back()
                     config.onDone()
                 })
+
+            Config.Settings -> Settings(
+                componentContext = componentContext,
+                onLeaderAuth = { pushNavigate(Config.LeaderAuth({})) })
         }
 
-    private fun navigate(target: Config) {
+    private fun pushNavigate(target: Config) {
         navigation.push(target)
+    }
+
+    private fun replaceNavigation(target: Config) {
+        navigation.replaceCurrent(target)
     }
 
     private fun back() {
         navigation.pop()
     }
 
-    private sealed interface Config : Parcelable {
+    sealed interface Config : Parcelable {
         @Parcelize
         object Schedule : Config
 
         @Parcelize
         data class LeaderAuth(val onDone: () -> Unit) : Config
 
+        @Parcelize
+        object Settings : Config
+
     }
 
     @Composable
     override fun draw() {
-        Children(stack = stack) {
-            Log.i("qweqeqwe", "${it.instance}")
-            it.instance.draw()
-        }
+        RootScreen(
+            stack = stack,
+            navigateOnSchedule = { replaceNavigation(Config.Schedule) },
+            navigateOnSettings = { replaceNavigation(Config.Settings) })
     }
 }
