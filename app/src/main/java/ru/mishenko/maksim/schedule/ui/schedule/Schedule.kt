@@ -14,13 +14,12 @@ import ru.mishenko.maksim.schedule.domain.ScheduleUseCase
 import ru.mishenko.maksim.schedule.domain.model.Event
 import ru.mishenko.maksim.schedule.ui.root.Component
 
-class Schedule(componentContext: ComponentContext, val auth: (() -> Unit) -> Unit) : Component,
+class Schedule(componentContext: ComponentContext) : Component,
     ComponentContext by componentContext {
     private val scheduleUseCase = ScheduleUseCase()
     private val mutableState = MutableStateFlow(listOf<Event>())
     private val scope =
         CoroutineScope(SupervisorJob() + Dispatchers.Default) //TODO research CoroutineScope in decompose
-    private var isAuth = false
 
     init {
         update()
@@ -33,10 +32,6 @@ class Schedule(componentContext: ComponentContext, val auth: (() -> Unit) -> Uni
     @Composable
     override fun draw() {
         val state by mutableState.collectAsState()
-//        if (!isAuth) {
-//            auth(::update)
-//            isAuth = true
-//        }
         ScheduleScreen(events = state)
     }
 }
