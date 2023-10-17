@@ -9,7 +9,9 @@ class StoreMock : SettingsStore {
         Settings.OmgtuScheduleSettings(
             type = Settings.OmgtuScheduleSettings.Type.Group,
             name = "ИВТ-213"
-        )
+        ),
+        Settings.GoogleCalendarSettings(calendarId = "sirmaksim47@gmail.com"),
+        Settings.GoogleCalendarSettings(calendarId = "maxim.mishchenko@effective.band")
     )
 
     override fun set(name: String, settings: List<Settings>) {

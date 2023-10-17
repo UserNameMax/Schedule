@@ -20,6 +20,10 @@ fun SettingsScreen(settings: List<Settings>, onAuth: () -> Unit) {
                 is Settings.OmgtuScheduleSettings -> {
                     Text(text = "Поликек: ${it.name}")
                 }
+
+                is Settings.GoogleCalendarSettings -> {
+                    Text(text = "Google Calendar: ${it.calendarId}")
+                }
             }
         }
         Box(modifier = Modifier.clickable { onAuth() }) {

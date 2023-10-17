@@ -12,4 +12,6 @@ sealed interface Settings {
         val refreshToken: String,
         val accessToken: String
     ) : Settings
+
+    data class GoogleCalendarSettings(val calendarId: String) : Settings
 }

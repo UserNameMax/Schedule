@@ -58,6 +58,7 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            resources.excludes.add("META-INF/*")
         }
     }
 }
@@ -98,5 +99,9 @@ dependencies {
     implementation("com.arkivanov.decompose:decompose:2.0.2")
     implementation("com.arkivanov.decompose:extensions-compose-jetpack:2.0.2")
     implementation("com.arkivanov.decompose:extensions-android:2.0.2")
+
+    //google calendar
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.3.0")
+    implementation("com.google.apis:google-api-services-calendar:v3-rev20211026-1.32.1")
 
 }
