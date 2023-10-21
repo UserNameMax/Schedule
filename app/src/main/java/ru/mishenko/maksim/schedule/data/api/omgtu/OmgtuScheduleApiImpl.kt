@@ -15,6 +15,8 @@ import io.ktor.serialization.kotlinx.json.json
 import ru.mishenko.maksim.schedule.BuildConfig
 import ru.mishenko.maksim.schedule.data.api.omgtu.model.ScheduleResponse
 import ru.mishenko.maksim.schedule.data.api.omgtu.model.SearchResponse
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class OmgtuScheduleApiImpl : OmgtuScheduleApi {
     private val baseUrl = BuildConfig.omgtuScheduleUrl
@@ -38,10 +40,18 @@ class OmgtuScheduleApiImpl : OmgtuScheduleApi {
             parameter("type", type)
         }.body()
 
-    override suspend fun schedule(id: String, type: String): List<ScheduleResponse> =
+    override suspend fun schedule(
+        id: String,
+        type: String,
+        start: Calendar,
+        finish: Calendar
+    ): List<ScheduleResponse> =
         client.get("$baseUrl/schedule") {
+            val formatter = SimpleDateFormat("yyyy.MM.dd")
             url {
                 appendPathSegments(type, id)
             }
+            parameter("start", formatter.format(start.time))
+            parameter("finish", formatter.format(finish.time))
         }.body()
 }

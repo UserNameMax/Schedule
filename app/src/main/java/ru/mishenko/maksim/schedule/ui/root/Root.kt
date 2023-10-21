@@ -29,8 +29,7 @@ class Root(componentContext: ComponentContext) : Component, ComponentContext by 
     private fun child(config: Config, componentContext: ComponentContext): Component =
         when (config) {
             Config.Schedule -> Schedule(
-                componentContext = componentContext,
-                auth = { pushNavigate(Config.LeaderAuth(it)) })
+                componentContext = componentContext)
 
             is Config.LeaderAuth -> LeaderAuth(
                 componentContext = componentContext,

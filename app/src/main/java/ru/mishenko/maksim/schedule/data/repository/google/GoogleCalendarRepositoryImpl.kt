@@ -18,6 +18,7 @@ class GoogleCalendarRepositoryImpl : GoogleCalendarRepository, KoinComponent {
         .apply {
             timeMin = DateTime(startDate.timeInMillis)
             timeMax = DateTime(finishDate.timeInMillis)
+            singleEvents = true
         }
         .execute().items.mapNotNull { it?.toEvent() }
         .filter { it.start >= startDate && it.finish <= finishDate }

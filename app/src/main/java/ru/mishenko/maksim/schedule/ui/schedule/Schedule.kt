@@ -13,20 +13,38 @@ import kotlinx.coroutines.launch
 import ru.mishenko.maksim.schedule.domain.ScheduleUseCase
 import ru.mishenko.maksim.schedule.domain.model.Event
 import ru.mishenko.maksim.schedule.ui.root.Component
+import java.util.Calendar
+import java.util.GregorianCalendar
 
 class Schedule(componentContext: ComponentContext) : Component,
     ComponentContext by componentContext {
     private val scheduleUseCase = ScheduleUseCase()
-    private val mutableState = MutableStateFlow(listOf<Event>())
+    private val mutableState = MutableStateFlow(listOf<EventListUi>())
     private val scope =
         CoroutineScope(SupervisorJob() + Dispatchers.Default) //TODO research CoroutineScope in decompose
+    private val today by lazy {
+        GregorianCalendar().apply {
+            add(Calendar.MINUTE, -(get(Calendar.MINUTE) + 60 * get(Calendar.HOUR)))
+        }
+    }
+    private val dayCount = 31
+
+    private fun today() = today.clone() as Calendar
 
     init {
-        update()
+        load()
     }
 
-    fun update() = scope.launch {
-        mutableState.update { scheduleUseCase() }
+    private fun load() = scope.launch {
+        val finish = today().apply { add(Calendar.DAY_OF_MONTH, dayCount) }
+        mutableState.update { scheduleUseCase(start = today, finish = finish).toUi() }
+    }
+
+    private fun List<Event>.toUi(): List<EventListUi> = List(dayCount) { index ->
+        val day = today().apply { add(Calendar.DAY_OF_MONTH, index) }
+        val nextDay = today().apply { add(Calendar.DAY_OF_MONTH, index + 1) }
+        val events = filter { it.start in day..nextDay }
+        EventListUi(day = day, events = events)
     }
 
     @Composable

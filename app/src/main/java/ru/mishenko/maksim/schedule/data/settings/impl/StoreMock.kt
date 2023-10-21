@@ -5,10 +5,13 @@ import ru.mishenko.maksim.schedule.domain.model.Settings
 
 
 class StoreMock : SettingsStore {
-    private var store = listOf<Settings>(
+    private var store = listOf(
         Settings.OmgtuScheduleSettings(
             type = Settings.OmgtuScheduleSettings.Type.Group,
-            name = "ИВТ-213"
+            name = "ИВТ-213",
+            subGroup = "2",
+            showMilitaryDepartment = false,
+            showDebts = false
         ),
         Settings.GoogleCalendarSettings(calendarId = "sirmaksim47@gmail.com"),
         Settings.GoogleCalendarSettings(calendarId = "maxim.mishchenko@effective.band")

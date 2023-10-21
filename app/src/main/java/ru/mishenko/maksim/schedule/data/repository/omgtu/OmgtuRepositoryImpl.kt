@@ -6,14 +6,17 @@ import ru.mishenko.maksim.schedule.data.api.omgtu.OmgtuScheduleApi
 import ru.mishenko.maksim.schedule.data.api.omgtu.model.ScheduleResponse
 import ru.mishenko.maksim.schedule.domain.model.Event
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.GregorianCalendar
 
 class OmgtuRepositoryImpl() : OmgtuRepository, KoinComponent {
     private val api: OmgtuScheduleApi by inject()
-    override suspend fun events(group: String): List<Event> =
+    override suspend fun events(group: String, start: Calendar, finish: Calendar): List<Event> =
         with(api.search(group, "group").firstOrNull()) {
             if (this == null) listOf()
-            else api.schedule(id.toString(), "group").map { it.toEvent() }.sortedBy { it.start }
+            else api.schedule(id = id.toString(), type = "group", start = start, finish = finish)
+                .map { it.toEvent() }
+                .sortedBy { it.start }
         }
 
     private val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm")

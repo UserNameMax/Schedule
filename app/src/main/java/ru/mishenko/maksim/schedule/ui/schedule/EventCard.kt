@@ -1,12 +1,9 @@
 package ru.mishenko.maksim.schedule.ui.schedule
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,8 +17,6 @@ fun EventCard(modifier: Modifier = Modifier, event: Event) {
     val timeFormater = SimpleDateFormat("HH:mm")
     Row(
         modifier = modifier
-            .border(width = 2.dp, color = MaterialTheme.colorScheme.onPrimary)
-            .padding(5.dp)
     ) {
         Column {
             Text(text = dateFormater.format(event.start.time))
